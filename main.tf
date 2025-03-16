@@ -1,3 +1,6 @@
+#this script is used to create multiple ec2 instances in aws with using existing vpc and subnet
+#references: https://spacelift.io/blog/terraform-ec2-instance#how-to-create-multiple-ec2-instances-with-different-configurations
+
 provider "aws" {
     region = var.aws
 }
@@ -41,6 +44,7 @@ resource "aws_instance" "my_ec2_instance" {
   ami           = "ami-08b5b3a93ed654d19"  # Amazon Linux 2 AMI
   instance_type = "t2.micro"
   key_name      = "test"  # Attach the key pair
+  count = 2 # Create 2 instances with identical configurations
 
   # Enable public IP
   associate_public_ip_address = true

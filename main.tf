@@ -1,10 +1,6 @@
 #this script is used to create multiple ec2 instances in aws with using existing vpc and subnet
 #references: https://spacelift.io/blog/terraform-ec2-instance#how-to-create-multiple-ec2-instances-with-different-configurations
 
-provider "aws" {
-    region = var.aws
-}
-
 # Create a security group
 resource "aws_security_group" "allow_ssh_and_http" {
   name        = "allow_ssh_and_http"
@@ -67,7 +63,7 @@ resource "aws_instance" "my_ec2_instance" {
   }
 }
 
-# Output the public IP
+# Output the public IP of the EC2 instance
 output "public_ip" {
   value = aws_instance.my_ec2_instance[*].public_ip
 }

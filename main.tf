@@ -69,5 +69,5 @@ resource "aws_instance" "my_ec2_instance" {
 
 # Output the public IP
 output "public_ip" {
-  value = aws_instance.my_ec2_instance.public_ip
+  value = aws_instance.my_ec2_instance[*].public_ip
 }

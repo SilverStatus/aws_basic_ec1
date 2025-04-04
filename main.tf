@@ -70,7 +70,7 @@ output "public_ip" {
 
 # create s3 for terraform state
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "terraform-state-bucket-1234567890"
+  bucket = "terraform-state-bucket-101003"
   force_destroy = "true" # Allow force destroy for testing purposes  
 
   tags = {
@@ -99,12 +99,12 @@ resource "aws_dynamodb_table" "terraform_locks" {
 }
 
 # enable terraform remote backend and state locking
-# terraform {
-#   backend "s3" {
-#     bucket         = "terraform-state-bucket-1234567890"
-#     key            = "terraform.tfstate"
-#     region         = "us-east-1"
-#     dynamodb_table = "terraform_locks"
-#   }
-# }
+terraform {
+  backend "s3" {
+    bucket         = aws_s3_bucket.terraform_state.bucket
+    key            = "terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = aws_dynamodb_table.terraform_locks.name
+  }
+}
 

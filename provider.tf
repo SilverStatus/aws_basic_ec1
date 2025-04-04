@@ -6,6 +6,9 @@ terraform {
     aws = {
       source  = "hashicorp/aws"
       version = "~> 5.92.0"
+      s3_use_path_style           = false
+      skip_region_validation      = false
+      skip_credentials_validation = false
     }
   }
 }

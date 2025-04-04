@@ -70,7 +70,8 @@ output "public_ip" {
 
 # create s3 for terraform state
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "terraform-state-bucket-1234567890"  
+  bucket = "terraform-state-bucket-1234567890"
+  force_destroy = "true" # Allow force destroy for testing purposes  
 
   tags = {
     Name        = "terraform-state-bucket"

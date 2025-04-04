@@ -76,7 +76,7 @@ pipeline {
                 sh 'terraform destroy -auto-approve'
             }
         }
-        
+        /*
         stage('Upload State to S3') {
             when {
                 anyOf {
@@ -88,6 +88,7 @@ pipeline {
                 sh 'aws s3 cp terraform.tfstate s3://your-bucket-name/terraform.tfstate'
             }
         }
+        */
     }
     post {
         always {

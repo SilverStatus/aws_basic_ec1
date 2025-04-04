@@ -67,3 +67,33 @@ resource "aws_instance" "my_ec2_instance" {
 output "public_ip" {
   value = aws_instance.my_ec2_instance[*].public_ip
 }
+
+# create s3 for terraform state
+resource "aws_s3_bucket" "terraform_state" {
+  bucket = "terraform-state-bucket-1234567890"  
+
+  tags = {
+    Name        = "terraform-state-bucket"
+    Environment = "Terraform"
+  }
+  
+}
+
+# create dynamodb table for state locking
+resource "aws_dynamodb_table" "terraform_locks" {
+  name         = "terraform_locks"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = "LockID"
+
+  attribute {
+    name = "LockID"
+    type = "S"
+  }
+
+  tags = {
+    Name        = "terraform_locks"
+    Environment = "Terraform"
+  }
+  
+}
+

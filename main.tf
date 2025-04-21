@@ -11,7 +11,7 @@ resource "aws_security_group" "allow_ssh_and_http" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["118.99.102.109/32"]  # Replace <your-ip> with your public IP
+    cidr_blocks = ["118.99.115.149/32"]  # Replace <your-ip> with your public IP
   }
 
   # Inbound rule for HTTP (port 80)
@@ -37,10 +37,10 @@ resource "aws_security_group" "allow_ssh_and_http" {
 
 # Create an EC2 instance and attach the key pair and security group
 resource "aws_instance" "my_ec2_instance" {
-  ami           = "ami-08b5b3a93ed654d19"  # Amazon Linux 2 AMI
-  instance_type = "t2.micro"
+  ami           = "ami-084568db4383264d4"  
+  instance_type = "t2.small"
   key_name      = "test"  # Attach the key pair
-  count = 1 # Create 2 instances with identical configurations
+  count = 1 # Create instances with identical configurations
 
   # Enable public IP
   associate_public_ip_address = true

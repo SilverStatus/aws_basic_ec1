@@ -19,7 +19,7 @@ resource "aws_security_group" "allow_ssh_and_http" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["118.99.115.149/0"]  # Allow HTTP traffic from anywhere
+    cidr_blocks = ["118.99.115.149/32"]  # Allow HTTP traffic from anywhere
   }
 
   # Outbound rule (allow all traffic)

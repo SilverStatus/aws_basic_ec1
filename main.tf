@@ -16,10 +16,10 @@ resource "aws_security_group" "allow_ssh_and_http" {
 
   # Inbound rule for HTTP (port 80)
   ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]  # Allow HTTP traffic from anywhere
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["118.99.115.149/0"]  # Allow HTTP traffic from anywhere
   }
 
   # Outbound rule (allow all traffic)

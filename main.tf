@@ -40,7 +40,7 @@ resource "aws_instance" "my_ec2_instance" {
   ami           = "ami-08b5b3a93ed654d19"  # Amazon Linux 2 AMI
   instance_type = "t2.micro"
   key_name      = "test"  # Attach the key pair
-  count = 2 # Create 2 instances with identical configurations
+  count = 1 # Create 2 instances with identical configurations
 
   # Enable public IP
   associate_public_ip_address = true
@@ -49,14 +49,14 @@ resource "aws_instance" "my_ec2_instance" {
   vpc_security_group_ids = [aws_security_group.allow_ssh_and_http.id]
 
   # User data to install and start Apache web server
-  user_data = <<-EOF
-              #!/bin/bash
-              sudo yum update -y
-              sudo yum install -y httpd
-              sudo systemctl start httpd
-              sudo systemctl enable httpd
-              echo "<h1>Hello from $(hostname -f)</h1>" | sudo tee /var/www/html/index.html
-              EOF
+  # user_data = <<-EOF
+  #             #!/bin/bash
+  #             sudo yum update -y
+  #             sudo yum install -y httpd
+  #             sudo systemctl start httpd
+  #             sudo systemctl enable httpd
+  #             echo "<h1>Hello from $(hostname -f)</h1>" | sudo tee /var/www/html/index.html
+  #             EOF
 
   tags = {
     Name = "my-ec2-instance"
@@ -67,36 +67,6 @@ resource "aws_instance" "my_ec2_instance" {
 output "public_ip" {
   value = aws_instance.my_ec2_instance[*].public_ip
 }
-
-# create s3 for terraform state
-# resource "aws_s3_bucket" "terraform_state" {
-#   bucket = "terraform-state-bucket-101003"
-#   force_destroy = "true" # Allow force destroy for testing purposes  
-
-#   tags = {
-#     Name        = "terraform-state-bucket"
-#     Environment = "Terraform"
-#   }
-  
-# }
-
-# # create dynamodb table for state locking
-# resource "aws_dynamodb_table" "terraform_locks" {
-#   name         = "terraform_locks"
-#   billing_mode = "PAY_PER_REQUEST"
-#   hash_key     = "LockID"
-
-#   attribute {
-#     name = "LockID"
-#     type = "S"
-#   }
-
-#   tags = {
-#     Name        = "terraform_locks"
-#     Environment = "Terraform"
-#   }
-  
-# }
 
 # enable terraform remote backend and state locking
 terraform {

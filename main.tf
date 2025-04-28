@@ -19,7 +19,7 @@ resource "aws_security_group" "allow_ssh_and_http" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["182.253.86.119/32"]  # Allow HTTP traffic from anywhere
+    cidr_blocks = ["125.160.243.53/32"]  # Allow HTTP traffic from anywhere
   }
 
   # Outbound rule (allow all traffic)
@@ -40,7 +40,7 @@ resource "aws_instance" "my_ec2_instance" {
   ami           = "ami-084568db4383264d4"  
   instance_type = "t2.small"
   key_name      = "test"  # Attach the key pair
-  count = 2 # Create instances with identical configurations
+  count = 1 # Create instances with identical configurations
 
   # Enable public IP
   associate_public_ip_address = true

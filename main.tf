@@ -19,7 +19,7 @@ resource "aws_security_group" "allow_ssh_and_http" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["125.160.243.53/32"]  # Allow HTTP traffic from anywhere
+    cidr_blocks = ["182.253.169.112/32"]  # Allow HTTP traffic from anywhere
   }
 
   # Outbound rule (allow all traffic)
@@ -37,16 +37,28 @@ resource "aws_security_group" "allow_ssh_and_http" {
 
 # Create an EC2 instance and attach the key pair and security group
 resource "aws_instance" "my_ec2_instance" {
-  ami           = "ami-084568db4383264d4"  
+  ami           = "ami-0953476d60561c955"  #amazon linux 2023 ami
   instance_type = "t2.small"
   key_name      = "test"  # Attach the key pair
-  count = 1 # Create instances with identical configurations
+  count = 2 # Create instances with identical configurations
 
   # Enable public IP
   associate_public_ip_address = true
 
   # Attach the security group
   vpc_security_group_ids = [aws_security_group.allow_ssh_and_http.id]
+  lifecycle {
+    create_before_destroy = true
+  }
+  # Create on spot instances with specific options
+  instance_market_options {
+    market_type = "spot"
+    spot_options {
+      max_price = "0.02"
+      spot_instance_type = "persistent"
+      instance_interruption_behavior = "stop"
+    }
+  }
 
   # User data to install and start Apache web server
   # user_data = <<-EOF

@@ -14,6 +14,15 @@ resource "aws_security_group" "allow_ssh_and_http" {
   #   cidr_blocks = ["118.99.115.149/32"]  # Replace <your-ip> with your public IP
   # }
 
+  # Allow all inbound traffic from the same security group
+  # This is critical for instances to communicate with each other
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"  # All protocols
+    self        = true  # Critical: Allows members of this SG to talk to each other
+  }
+
   # Inbound rule for HTTP (port 80)
   ingress {
     from_port   = 0

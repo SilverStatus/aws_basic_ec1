@@ -47,7 +47,7 @@ resource "aws_security_group" "allow_ssh_and_http" {
 # Create an EC2 instance and attach the key pair and security group
 resource "aws_instance" "my_ec2_instance" {
   ami           = "ami-0953476d60561c955"  #amazon linux 2023 ami
-  instance_type = "t2.small"
+  instance_type = "t4g.small"
   key_name      = "test"  # Attach the key pair
   count = 2 # Create instances with identical configurations
 
